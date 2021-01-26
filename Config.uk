@@ -1,0 +1,14 @@
+config LIBPARISTRACEROUTE
+	bool "LIBPARISTRACEROUTE - a network measurement library"
+	default n
+	select LIBNOLIBC if !HAVE_LIBC
+	select LIBUKDEBUG
+	select LIBUKALLOC
+    select LIBNEWLIB
+    select LIBPOSIX_SYSINFO
+    select LIBPOSIX_LIBDL
+
+default n
+
+if LIBPARISTRACEROUTE
+endif

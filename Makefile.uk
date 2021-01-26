@@ -1,0 +1,104 @@
+################################################################################
+# Library registration
+################################################################################
+$(eval $(call addlib_s,libparistraceroute,$(CONFIG_LIBPARISTRACEROUTE)))
+
+################################################################################
+# Sources
+################################################################################
+# This needs changing
+LIBPARISTRACEROUTE_VERSION=master
+LIBPARISTRACEROUTE_URL=https://github.com/crotsos/libparistraceroute/archive/master.zip
+
+LIBPARISTRACEROUTE_PATCHDIR=$(LIBPARISTRACEROUTE_BASE)/patches
+$(eval $(call fetch,libparistraceroute,$(LIBPARISTRACEROUTE_URL)))
+$(eval $(call patch,libparistraceroute,$(LIBPARISTRACEROUTE_PATCHDIR),libparistraceroute-$(LIBPARISTRACEROUTE_VERSION)))
+###############################################################################
+# Helpers
+################################################################################
+LIBPARISTRACEROUTE_SUBDIR=libparistraceroute-$(LIBPARISTRACEROUTE_VERSION)
+LIBPARISTRACEROUTE_SRC=$(LIBPARISTRACEROUTE_ORIGIN)/$(LIBPARISTRACEROUTE_SUBDIR)
+
+################################################################################
+# Library includes
+################################################################################
+CINCLUDES-$(CONFIG_LIBPARISTRACEROUTE) += -I$(LIBPARISTRACEROUTE_SRC)/libparistraceroute/
+CINCLUDES-$(CONFIG_LIBPARISTRACEROUTE) += -I$(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/
+CXXINCLUDES-$(CONFIG_LIBPARISTRACEROUTE) += -I$(LIBPARISTRACEROUTE_SRC)/libparistraceroute
+CXXINCLUDES-$(CONFIG_LIBPARISTRACEROUTE) += -I$(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/
+
+################################################################################
+# Global flags
+################################################################################
+# Suppress some warnings to make the build process look neater
+SUPPRESS_FLAGS += -Wno-unused-parameter -Wno-unused-variable -Wno-nonnull	\
+-Wno-unused-but-set-variable -Wno-unused-label -Wno-char-subscripts		\
+-Wno-unused-function -Wno-missing-field-initializers -Wno-uninitialized		\
+-Wno-array-bounds -Wno-maybe-uninitialized -Wno-pointer-sign -Wno-unused-value	\
+-Wno-unused-macros -Wno-parentheses -Wno-implicit-function-declaration		\
+-Wno-missing-braces -Wno-endif-labels -Wno-unused-but-set-variable		\
+-Wno-implicit-function-declaration -Wno-type-limits -Wno-sign-compare
+
+LIBPARISTRACEROUTE_CFLAGS-y    +=  $(SUPPRESS_FLAGS)
+LIBPARISTRACEROUTE_CXXFLAGS-y    +=  $(SUPPRESS_FLAGS)
+
+################################################################################
+# Library sources
+################################################################################
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/address.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithm.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda/bound.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda/data.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda/flow.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda/interface.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/mda/ttl_flow.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/ping.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/algorithms/traceroute.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/bitfield.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/bits.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/buffer.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/common.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/containers/object.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/containers/list.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/containers/map.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/containers/pair.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/containers/set.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/dynarray.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/event.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/field.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/filter.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/group.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/generator.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/generators/uniform.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/lattice.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/layer.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/metafield.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/network.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/optparse.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/options.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/os/sys/epoll.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/os/sys/eventfd.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/os/sys/signalfd.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/os/sys/timerfd.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/os/search.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/packet.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/probe.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/probe_group.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocol.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/icmpv4.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/icmpv6.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/ipv4.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/ipv4_pseudo_header.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/ipv6.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/ipv6_pseudo_header.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/tcp.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocols/udp.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/protocol_field.c
+# LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/pt_loop.c
+# LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/queue.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/sniffer.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/socketpool.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/tree.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/vector.c
+LIBPARISTRACEROUTE_SRCS-y += $(LIBPARISTRACEROUTE_SRC)/libparistraceroute/whois.c
